@@ -173,6 +173,10 @@ main {
     gap: 0.5rem;
     white-space: nowrap;
 }
+.search-button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 .welcome-message {
     max-width: 42rem;
     margin: 0 auto;

@@ -36,10 +36,12 @@ async function getData(data) {
         welcomeMessage.classList.add("hidden");
         const res = await fetch(`https://api.github.com/users/${data}`);
         if (!res.ok) throw new Error("Lỗi mạng hoặc api");
+        searchButton.disabled = false;
         loadingState.classList.add("hidden");
         const user = await res.json();
         renderuser(user);
     } catch (error) {
+        searchButton.disabled = false;
         errorMessage.classList.remove("hidden");
         errorText.textContent = "Không tìm thấy người dùng";
         loadingState.classList.add("hidden");
@@ -49,12 +51,14 @@ async function getData(data) {
 searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
+        searchButton.disabled = true;
         getData(e.target.value);
     }
 });
 
 searchButton.addEventListener("click", (e) => {
     e.preventDefault();
+    searchButton.disabled = true;
     getData(searchInput.value);
 });
 
