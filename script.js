@@ -3,6 +3,7 @@ const moonIcon = document.querySelector(".moon-icon");
 const sunIcon = document.querySelector(".sun-icon");
 const searchInput = document.querySelector(".search-input");
 const searchButton = document.querySelector(".search-button");
+const buttonText = document.querySelector(".button-text");
 const loadingState = document.querySelector("#loadingState");
 const welcomeMessage = document.querySelector("#welcomeMessage");
 const userCard = document.querySelector("#userCard");
@@ -37,11 +38,15 @@ async function getData(data) {
         const res = await fetch(`https://api.github.com/users/${data}`);
         if (!res.ok) throw new Error("Lỗi mạng hoặc api");
         searchButton.disabled = false;
+        buttonText.textContent = "Search";
+
         loadingState.classList.add("hidden");
         const user = await res.json();
         renderuser(user);
     } catch (error) {
         searchButton.disabled = false;
+        buttonText.textContent = "Search";
+
         errorMessage.classList.remove("hidden");
         errorText.textContent = "Không tìm thấy người dùng";
         loadingState.classList.add("hidden");
@@ -52,6 +57,7 @@ searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         e.preventDefault();
         searchButton.disabled = true;
+        buttonText.textContent = "Searching...";
         getData(e.target.value);
     }
 });
@@ -59,6 +65,7 @@ searchInput.addEventListener("keydown", (e) => {
 searchButton.addEventListener("click", (e) => {
     e.preventDefault();
     searchButton.disabled = true;
+    buttonText.textContent = "Searching...";
     getData(searchInput.value);
 });
 
